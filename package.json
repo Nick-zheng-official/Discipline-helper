@@ -1,11 +1,12 @@
-{
-  "name": "discipline-helper",
+{"name": "discipline-helper",
   "version": "1.0.0",
-  "description": "Just a helper.",
+  "description": "自律助手 - 帮助用户提高学习和工作效率的桌面应用",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec electron ."
+    "start": "nodemon --exec electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "repository": {
     "type": "git",
@@ -13,7 +14,9 @@
   },
   "keywords": [
     "discipline",
-    "helper"
+    "helper",
+    "productivity",
+    "electron"
   ],
   "author": "Nick_zheng",
   "license": "ISC",
@@ -23,6 +26,19 @@
   "homepage": "https://github.com/Nick-zheng-official/Discipline-helper#readme",
   "devDependencies": {
     "electron": "^37.4.0",
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.nickzheng.disciplinehelper",
+    "productName": "自律助手",
+    "copyright": "Copyright © 2024 ${author}",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    }
   }
 }

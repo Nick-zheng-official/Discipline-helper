@@ -15,7 +15,6 @@ function createWindow() {
   });
   win.loadFile("./pages/index.html");
   win.maximize();
-  win.openDevTools(); //自动打开调试窗口
   console.log("main.js里的main.js");
 }
 app.on("ready", () => {
