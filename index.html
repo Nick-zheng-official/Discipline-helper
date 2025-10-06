@@ -2,20 +2,50 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>自律助手</title>
     <!-- 网页图标设置 -->
-    <link rel="icon" type="image/png" sizes="32x32" href="build/icons/32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="build/icons/16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="build/icons/180x180.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="build/icons/152x152.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="build/icons/144x144.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="build/icons/120x120.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="build/icons/120x120.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="build/icons/76x76.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="build/icons/72x72.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="build/icons/60x60.png">
-    <link rel="apple-touch-icon" sizes="57x57" href="build/icons/60x60.png">
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="build/icons/32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="build/icons/16x16.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="build/icons/180x180.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="build/icons/152x152.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="build/icons/144x144.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="build/icons/120x120.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="build/icons/120x120.png"
+    />
+    <link rel="apple-touch-icon" sizes="76x76" href="build/icons/76x76.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="build/icons/72x72.png" />
+    <link rel="apple-touch-icon" sizes="60x60" href="build/icons/60x60.png" />
+    <link rel="apple-touch-icon" sizes="57x57" href="build/icons/60x60.png" />
     <style>
       * {
         margin: 0;
@@ -7676,7 +7706,9 @@ www.github.com" rows="6" style="
         checkAndResetDailyTasks();
 
         // 保存当前活跃的界面
-        const activeSection = document.querySelector(".todoSection.active, .toolsSection.active, .shopSection.active, .profileSection.active");
+        const activeSection = document.querySelector(
+          ".todoSection.active, .toolsSection.active, .shopSection.active, .profileSection.active"
+        );
         if (activeSection) {
           // 提取section ID并转换为对应的tab名称
           const sectionId = activeSection.id;
@@ -7779,7 +7811,7 @@ www.github.com" rows="6" style="
         if (window.lastActiveTab) {
           switchTab(window.lastActiveTab);
         } else {
-          switchTab('todo');
+          switchTab("todo");
         }
       }
 
