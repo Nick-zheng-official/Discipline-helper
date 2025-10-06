@@ -31,7 +31,7 @@ function createWindow() {
       preload: path.resolve(__dirname, "./preload.js"),
     },
   });
-  win.loadFile("./pages/index.html");
+  win.loadFile("./index.html");
   win.maximize();
   console.log("main.js里的main.js");
 }
