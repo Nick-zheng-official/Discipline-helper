@@ -1,4 +1,4 @@
 const { contextBridge } = require("electron");
 contextBridge.exposeInMainWorld("myAPI", {
-  version: process.version
+  version: process.version,
 });

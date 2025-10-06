@@ -17,6 +17,15 @@
         background: white;
         min-height: 100vh;
         overflow: auto; /* 允许手机端上下滑动 */
+        /* 防止弹性滚动导致的导航栏移动 */
+        overscroll-behavior: none;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      html {
+        /* 防止页面整体弹性滚动 */
+        overscroll-behavior: none;
+        -webkit-overflow-scrolling: touch;
       }
 
       /* 主题色变量 */
@@ -103,11 +112,240 @@
         font-size: 0.9rem;
       }
 
+      /* 货币项样式 */
+      .currency-item {
+        display: flex;
+        align-items: center;
+        margin-right: 1rem;
+      }
+
+      /* 手机端响应式样式 */
+      @media (max-width: 768px) {
+        .header-left {
+          display: none;
+        }
+
+        .header-center .daily-task-button span {
+          display: none;
+        }
+
+        .header-right .username {
+          display: inline;
+          font-size: 0.9rem;
+          margin-right: 0.3rem;
+        }
+
+        .header-right .rank-badge {
+          display: inline;
+          font-size: 0.8rem;
+        }
+
+        .announcement-icon span {
+          display: none;
+        }
+
+        /* 手机端顶部导航栏调整 */
+        .top-header {
+          padding: 0 0.5rem;
+          height: 50px;
+        }
+
+        .daily-task-button {
+          padding: 6px 12px;
+        }
+
+        .user-avatar {
+          width: 35px;
+          height: 35px;
+          font-size: 1rem;
+        }
+
+        /* 番茄钟窄屏幕适配 */
+        .tomato-clock-container {
+          max-width: 95% !important;
+          padding: 1rem !important;
+          margin: 0.5rem auto !important;
+        }
+
+        #taskNameDisplay {
+          font-size: 1rem !important;
+          max-width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        #timeDisplay {
+          font-size: 4rem !important;
+          margin-bottom: 0.3rem !important;
+        }
+
+        #encouragementDisplay {
+          font-size: 0.9rem !important;
+          max-width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        #tomatoClockSettings input,
+        #tomatoClockSettings textarea {
+          font-size: 0.9rem !important;
+          padding: 0.5rem !important;
+        }
+
+        #tomatoClockSettings label {
+          font-size: 0.8rem !important;
+        }
+
+        #tomatoClockSettings div[style*="min-width: 150px"] {
+          min-width: 100% !important;
+          flex: 1 1 100% !important;
+        }
+
+        #tomatoClockSettings div[style*="min-width: 300px"] {
+          min-width: 100% !important;
+          flex: 1 1 100% !important;
+        }
+
+        /* 自律日历窄屏幕适配 */
+        .calendar-container {
+          max-width: 95% !important;
+          padding: 1rem !important;
+          margin: 0.5rem auto !important;
+        }
+
+        .calendar-header {
+          flex-direction: column !important;
+          gap: 1rem !important;
+          align-items: stretch !important;
+        }
+
+        .calendar-header h3 {
+          font-size: 1.2rem !important;
+          text-align: center !important;
+        }
+
+        .calendar-nav {
+          justify-content: center !important;
+          gap: 1rem !important;
+        }
+
+        .calendar-nav button {
+          padding: 0.4rem 0.8rem !important;
+          font-size: 0.9rem !important;
+        }
+
+        .calendar-grid {
+          grid-template-columns: repeat(7, 1fr) !important;
+          gap: 0.3rem !important;
+        }
+
+        .calendar-day {
+          padding: 0.3rem !important;
+          font-size: 0.8rem !important;
+          min-height: 40px !important;
+        }
+
+        .calendar-day div {
+          font-size: 0.7rem !important;
+          line-height: 1.2 !important;
+        }
+
+        .stats-container {
+          padding: 1rem !important;
+          margin-top: 1rem !important;
+        }
+
+        .stats-chart {
+          height: 150px !important;
+          gap: 0.3rem !important;
+        }
+
+        .chart-bar {
+          width: 20px !important;
+        }
+
+        .chart-value {
+          font-size: 0.7rem !important;
+          top: -20px !important;
+        }
+
+        .chart-label {
+          font-size: 0.6rem !important;
+          bottom: -20px !important;
+        }
+      }
+
+      /* 默认样式 - 显示完整文本 */
+      .header-left .currency-icon {
+        display: none;
+      }
+
+      .header-left .currency-text {
+        display: inline;
+      }
+
+      /* 超小屏幕响应式 */
+      @media (max-width: 480px) {
+        .header-left {
+          gap: 0.3rem;
+        }
+
+        .currency-item {
+          margin-right: 0.3rem;
+        }
+
+        .currency-icon {
+          margin-right: 0.2rem;
+          font-size: 0.9rem;
+        }
+
+        .currency-value {
+          font-size: 0.8rem;
+        }
+
+        .daily-task-button {
+          padding: 4px 8px;
+        }
+
+        .user-avatar {
+          width: 30px;
+          height: 30px;
+          font-size: 0.9rem;
+        }
+      }
+
+      .header-center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+      }
+
       .header-right {
         display: flex;
         align-items: center;
         gap: 0.5rem;
         cursor: pointer;
+      }
+
+      /* 每日任务按钮样式 */
+      .daily-task-button {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        padding: 8px 16px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .daily-task-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       }
 
       /* 公告图标样式 */
@@ -119,18 +357,18 @@
         border-radius: 50%;
         transition: background-color 0.2s ease;
       }
-      
+
       .announcement-icon:hover {
         background-color: rgba(255, 255, 255, 0.2);
       }
-      
+
       /* 可选：添加通知红点提示 */
       .announcement-icon.has-notification {
         position: relative;
       }
-      
+
       .announcement-icon.has-notification::after {
-        content: '';
+        content: "";
         position: absolute;
         top: 8px;
         right: 8px;
@@ -164,7 +402,12 @@
 
       .username {
         font-weight: bold;
-        font-size: 0.9rem;
+        font-size: 1.1rem;
+      }
+
+      #profileName {
+        font-size: 1.5rem !important;
+        margin-bottom: 0.5rem;
       }
 
       .avatar-upload {
@@ -303,12 +546,16 @@
         opacity: 0;
         transition: opacity 0.8s ease-in;
         padding-top: 60px;
+        padding-bottom: 70px;
       }
 
       .content-area {
         height: calc(100vh - 60px - 70px);
         overflow-y: auto;
         padding: 1rem;
+        /* 防止内容区域弹性滚动 */
+        overscroll-behavior: none;
+        -webkit-overflow-scrolling: touch;
       }
 
       /* 导航栏 */
@@ -464,6 +711,26 @@
       }
       .priority-low {
         background: #2ed573;
+      }
+
+      .delete-todo-btn {
+        background: none;
+        border: none;
+        color: #ff4757;
+        cursor: pointer;
+        padding: 0.3rem;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        opacity: 0.7;
+      }
+
+      .delete-todo-btn:hover {
+        background: rgba(255, 71, 87, 0.1);
+        opacity: 1;
+        transform: scale(1.1);
       }
 
       /* 我的界面 */
@@ -736,6 +1003,282 @@
         margin: 0.5rem 0;
         color: #333;
       }
+
+      /* 段位铭牌样式 */
+      .rank-badge {
+        background: linear-gradient(135deg, #ffd700, #ffa500);
+        color: #fff;
+        padding: 4px 12px;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        margin-left: 8px;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        border: 2px solid rgba(255, 255, 255, 0.4);
+        animation: rankGlow 2s ease-in-out infinite alternate;
+        min-width: 50px;
+        text-align: center;
+        display: inline-block;
+      }
+
+      @keyframes rankGlow {
+        0% {
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        100% {
+          box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+        }
+      }
+
+      /* 不同段位的颜色样式 */
+      .rank-badge.bronze {
+        background: linear-gradient(135deg, #cd7f32, #8b4513);
+      }
+
+      .rank-badge.silver {
+        background: linear-gradient(135deg, #c0c0c0, #808080);
+      }
+
+      .rank-badge.gold {
+        background: linear-gradient(135deg, #ffd700, #ffa500);
+      }
+
+      .rank-badge.platinum {
+        background: linear-gradient(135deg, #e5e4e2, #b9b9b9);
+      }
+
+      .rank-badge.diamond {
+        background: linear-gradient(135deg, #b9f2ff, #7ec0ee);
+      }
+
+      .rank-badge.master {
+        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+      }
+
+      .rank-badge.grandmaster {
+        background: linear-gradient(135deg, #8a2be2, #4b0082);
+      }
+
+      .rank-badge.challenger {
+        background: linear-gradient(135deg, #ff1493, #dc143c);
+      }
+
+      /* 用户名等级颜色样式 */
+      .username.level-1 {
+        color: #808080; /* 灰色 */
+      }
+
+      .username.level-2 {
+        color: #4169e1; /* 蓝色 */
+      }
+
+      .username.level-3 {
+        color: #8b4513; /* 棕色 */
+      }
+
+      .username.level-4 {
+        color: #228b22; /* 绿色 */
+      }
+
+      .username.level-5 {
+        color: #ff8c00; /* 橙色 */
+      }
+
+      .username.level-6 {
+        color: #dc143c; /* 红色 */
+      }
+
+      .username.level-7 {
+        color: #8a2be2; /* 紫色 */
+      }
+
+      .username.level-8 {
+        color: #ff1493; /* 粉红色 */
+      }
+
+      .username.level-9 {
+        color: #00ced1; /* 青色 */
+      }
+
+      .username.level-10 {
+        color: #ffd700; /* 金色 */
+      }
+
+      .username.level-gold {
+        color: #ffd700;
+        background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+      }
+
+      /* 高级等级颜色（11-256级）使用循环颜色 */
+      .username.level-high {
+        text-shadow: 0 0 10px currentColor, 0 0 20px currentColor,
+          0 0 30px currentColor;
+        animation: textGlow 2s ease-in-out infinite alternate;
+      }
+
+      /* 详情界面样式 */
+      .details-section {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        padding: 2rem;
+        box-sizing: border-box;
+      }
+
+      .details-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
+
+      .back-button {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        cursor: pointer;
+        margin-right: 1rem;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .back-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateX(-5px);
+      }
+
+      .details-header h2 {
+        color: white;
+        margin: 0;
+        font-size: 1.8rem;
+      }
+
+      .details-content {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 2rem;
+        flex: 1;
+        overflow-y: auto;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .details-content h3 {
+        color: #333;
+        margin-bottom: 1rem;
+        font-size: 1.3rem;
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 0.5rem;
+      }
+
+      .details-content ul {
+        color: #555;
+        line-height: 1.6;
+        margin-bottom: 2rem;
+      }
+
+      .details-content li {
+        margin-bottom: 0.5rem;
+      }
+
+      .color-grid,
+      .rank-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .color-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+        border: 1px solid #eee;
+      }
+
+      .color-dot {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 2px solid #ddd;
+      }
+
+      .rank-item {
+        padding: 1.5rem;
+        border-radius: 10px;
+        text-align: center;
+        color: white;
+        font-weight: bold;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .rank-item.bronze {
+        background: linear-gradient(135deg, #cd7f32, #b87333);
+      }
+      .rank-item.silver {
+        background: linear-gradient(135deg, #c0c0c0, #a8a8a8);
+      }
+      .rank-item.gold {
+        background: linear-gradient(135deg, #ffd700, #daa520);
+      }
+      .rank-item.platinum {
+        background: linear-gradient(135deg, #e5e4e2, #b8b8b8);
+      }
+      .rank-item.diamond {
+        background: linear-gradient(135deg, #b9f2ff, #89cff0);
+      }
+      .rank-item.master {
+        background: linear-gradient(135deg, #8a2be2, #6a0dad);
+      }
+      .rank-item.grandmaster {
+        background: linear-gradient(135deg, #ff6b6b, #ff4757);
+      }
+      .rank-item.challenger {
+        background: linear-gradient(135deg, #ffd700, #ffa500);
+      }
+
+      .rank-name {
+        display: block;
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .rank-requirement {
+        display: block;
+        font-size: 0.9rem;
+        opacity: 0.9;
+      }
+
+      .level-rewards,
+      .rank-rewards {
+        background: rgba(102, 126, 234, 0.1);
+        padding: 1.5rem;
+        border-radius: 10px;
+        border-left: 4px solid var(--primary-color);
+      }
+
+      .level-rewards p,
+      .rank-rewards p {
+        margin: 0;
+        color: #333;
+        font-size: 1.1rem;
+        font-weight: 500;
+      }
     </style>
   </head>
   <body>
@@ -811,16 +1354,57 @@
       <!-- 顶部信息栏 -->
       <div class="top-header">
         <div class="header-left">
-          <span>金币: <span id="headerCoins">0</span></span>
-          <span>钻石: <span id="headerDiamonds">0</span></span>
+          <span class="currency-item">
+            <span class="currency-icon">💰</span>
+            <span class="currency-text">金币: </span>
+            <span class="currency-value" id="headerCoins">0</span>
+          </span>
+          <span class="currency-item">
+            <span class="currency-icon">💎</span>
+            <span class="currency-text">钻石: </span>
+            <span class="currency-value" id="headerDiamonds">0</span>
+          </span>
+        </div>
+        <div class="header-center">
+          <!-- 每日任务按钮 -->
+          <div
+            class="daily-task-button"
+            onclick="showDailyTasks()"
+            title="每日任务"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              style="margin-right: 8px"
+            >
+              <path
+                d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm-7 4h14v2H5V7zm0 4h14v2H5v-2zm0 4h14v2H5v-2zm0 4h14v2H5v-2z"
+              />
+            </svg>
+            <span style="font-size: 0.9rem; white-space: nowrap">每日任务</span>
+          </div>
         </div>
         <div class="header-right" onclick="switchTab('profile')">
           <!-- 公告通知图标 -->
-          <div class="announcement-icon" onclick="event.stopPropagation(); showAnnouncementBoard()" title="公告">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px;">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-13h-2v6h2V7zm0 8h-2v2h2v-2z"/>
+          <div
+            class="announcement-icon"
+            onclick="event.stopPropagation(); showAnnouncementBoard()"
+            title="公告"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              style="margin-right: 8px"
+            >
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-13h-2v6h2V7zm0 8h-2v2h2v-2z"
+              />
             </svg>
-            <span style="font-size: 0.9rem; white-space: nowrap;">公告</span>
+            <span style="font-size: 0.9rem; white-space: nowrap">公告</span>
           </div>
           <div class="user-avatar" id="headerAvatar">
             <span id="headerAvatarText">U</span>
@@ -836,6 +1420,7 @@
             />
           </div>
           <span class="username" id="headerUsername">用户名</span>
+          <span class="rank-badge" id="headerRankBadge">青铜</span>
         </div>
       </div>
       <div class="content-area">
@@ -1354,6 +1939,166 @@
           </div>
         </div>
 
+        <!-- 等级详情界面 -->
+        <div
+          id="levelDetailsSection"
+          class="details-section"
+          style="display: none"
+        >
+          <div class="details-header">
+            <button onclick="hideDetails()" class="back-button">← 返回</button>
+            <h2>等级系统说明</h2>
+          </div>
+          <div class="details-content">
+            <div class="level-rules">
+              <h3>等级规则</h3>
+              <ul>
+                <li>最高等级：256级</li>
+                <li>升级方式：完成每日任务获得高效天数</li>
+                <li>每级所需高效天数：当前等级 × 2</li>
+              </ul>
+            </div>
+            <div class="level-colors">
+              <h3>等级颜色系统</h3>
+              <div class="color-grid">
+                <div class="color-item">
+                  <span class="color-dot" style="background: #808080"></span>
+                  <span class="username level-1">1-30级：灰色</span>
+                </div>
+                <div class="color-item">
+                  <span class="color-dot" style="background: #1e90ff"></span>
+                  <span class="username level-2">31-60级：蓝色</span>
+                </div>
+                <div class="color-item">
+                  <span class="color-dot" style="background: #8b4513"></span>
+                  <span class="username level-3">61-90级：棕色</span>
+                </div>
+                <div class="color-item">
+                  <span class="color-dot" style="background: #32cd32"></span>
+                  <span class="username level-4">91-120级：绿色</span>
+                </div>
+                <div class="color-item">
+                  <span class="color-dot" style="background: #ffa500"></span>
+                  <span class="username level-5">121-150级：橙色</span>
+                </div>
+                <div class="color-item">
+                  <span class="color-dot" style="background: #ff0000"></span>
+                  <span class="username level-6">151-180级：红色</span>
+                </div>
+                <div class="color-item">
+                  <span class="color-dot" style="background: #8a2be2"></span>
+                  <span class="username level-7">181-210级：紫色</span>
+                </div>
+                <div class="color-item">
+                  <span class="color-dot" style="background: #ffd700"></span>
+                  <span class="username level-gold level-high"
+                    >210级以上：金色+发光特效</span
+                  >
+                </div>
+              </div>
+              <p style="color: #666; font-size: 0.9rem; margin-top: 1rem">
+                以上文字颜色即为实际等级显示效果
+              </p>
+            </div>
+            <div class="level-rewards">
+              <h3>升级奖励</h3>
+              <p>每次升级获得：等级 × 10 金币</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 段位详情界面 -->
+        <div
+          id="rankDetailsSection"
+          class="details-section"
+          style="display: none"
+        >
+          <div class="details-header">
+            <button onclick="hideDetails()" class="back-button">← 返回</button>
+            <h2>段位系统说明</h2>
+          </div>
+          <div class="details-content">
+            <div class="rank-rules">
+              <h3>段位规则</h3>
+              <ul>
+                <li>最高段位：王者</li>
+                <li>升段方式：保持连续高效天数</li>
+                <li>升段所需连续天数：当前段位 × 7</li>
+              </ul>
+            </div>
+            <div class="rank-list">
+              <h3>段位列表</h3>
+              <div class="rank-grid">
+                <div class="rank-item bronze">
+                  <span class="rank-name">青铜</span>
+                  <span class="rank-requirement">需要7天连续高效</span>
+                  <span class="rank-badge bronze" style="margin-top: 0.5rem"
+                    >青铜</span
+                  >
+                </div>
+                <div class="rank-item silver">
+                  <span class="rank-name">白银</span>
+                  <span class="rank-requirement">需要14天连续高效</span>
+                  <span class="rank-badge silver" style="margin-top: 0.5rem"
+                    >白银</span
+                  >
+                </div>
+                <div class="rank-item gold">
+                  <span class="rank-name">黄金</span>
+                  <span class="rank-requirement">需要21天连续高效</span>
+                  <span class="rank-badge gold" style="margin-top: 0.5rem"
+                    >黄金</span
+                  >
+                </div>
+                <div class="rank-item platinum">
+                  <span class="rank-name">铂金</span>
+                  <span class="rank-requirement">需要28天连续高效</span>
+                  <span class="rank-badge platinum" style="margin-top: 0.5rem"
+                    >铂金</span
+                  >
+                </div>
+                <div class="rank-item diamond">
+                  <span class="rank-name">钻石</span>
+                  <span class="rank-requirement">需要35天连续高效</span>
+                  <span class="rank-badge diamond" style="margin-top: 0.5rem"
+                    >钻石</span
+                  >
+                </div>
+                <div class="rank-item master">
+                  <span class="rank-name">大师</span>
+                  <span class="rank-requirement">需要42天连续高效</span>
+                  <span class="rank-badge master" style="margin-top: 0.5rem"
+                    >大师</span
+                  >
+                </div>
+                <div class="rank-item grandmaster">
+                  <span class="rank-name">宗师</span>
+                  <span class="rank-requirement">需要49天连续高效</span>
+                  <span
+                    class="rank-badge grandmaster"
+                    style="margin-top: 0.5rem"
+                    >宗师</span
+                  >
+                </div>
+                <div class="rank-item challenger">
+                  <span class="rank-name">王者</span>
+                  <span class="rank-requirement">需要56天连续高效</span>
+                  <span class="rank-badge challenger" style="margin-top: 0.5rem"
+                    >王者</span
+                  >
+                </div>
+              </div>
+              <p style="color: #666; font-size: 0.9rem; margin-top: 1rem">
+                以上铭牌即为实际段位显示效果
+              </p>
+            </div>
+            <div class="rank-rewards">
+              <h3>升段奖励</h3>
+              <p>每次升段获得：段位系数 × 500 金币</p>
+            </div>
+          </div>
+        </div>
+
         <!-- 我的界面 -->
         <div id="profileSection" class="profile-section">
           <div class="profile-header">
@@ -1386,20 +2131,26 @@
             />
           </div>
 
-
-
           <div class="profile-info">
             <div class="info-item">
               <span>成就</span>
               <span>开发中</span>
             </div>
-            <div class="info-item">
+            <div
+              class="info-item"
+              onclick="showLevelDetails()"
+              style="cursor: pointer"
+            >
               <span>等级</span>
-              <span>开发中</span>
+              <span id="profileLevel">等级 1</span>
             </div>
-            <div class="info-item">
+            <div
+              class="info-item"
+              onclick="showRankDetails()"
+              style="cursor: pointer"
+            >
               <span>段位</span>
-              <span>开发中</span>
+              <span id="profileRank">段位 青铜</span>
             </div>
             <div class="info-item">
               <span>注册时间</span>
@@ -1927,11 +2678,19 @@
                 border-left: 4px solid var(--primary-color);
               "
             >
-              <h4 style="margin: 0 0 0.5rem 0; color: #333">自律助手上线啦！</h4>
+              <h4 style="margin: 0 0 0.5rem 0; color: #333">
+                自律助手上线啦！
+              </h4>
               <p style="margin: 0 0 0.5rem 0; color: #666; font-size: 0.9rem">
                 自律助手是一款帮助你提升效率、培养好习惯的多功能工具，包含以下核心功能：
               </p>
-              <ul style="margin: 0 0 0.5rem 1.5rem; color: #666; font-size: 0.9rem">
+              <ul
+                style="
+                  margin: 0 0 0.5rem 1.5rem;
+                  color: #666;
+                  font-size: 0.9rem;
+                "
+              >
                 <li>📋 代办任务管理 - 记录和追踪你的待办事项</li>
                 <li>🍅 番茄钟专注 - 提高专注力和工作效率</li>
                 <li>🔒 锁机功能 - 避免分心，保持自律</li>
@@ -2028,6 +2787,41 @@
             </select>
           </div>
           <div class="form-group">
+            <label>重复周期</label>
+            <select
+              id="todoRepeat"
+              title="任务重复周期"
+              aria-label="任务重复周期"
+              onchange="toggleCustomDays()"
+            >
+              <option value="none">不重复</option>
+              <option value="daily">每天</option>
+              <option value="3days">每3天</option>
+              <option value="weekly">每周</option>
+              <option value="monthly">每月</option>
+              <option value="yearly">每年</option>
+              <option value="custom">自定义天数</option>
+            </select>
+          </div>
+          <div class="form-group" id="customDaysGroup" style="display: none">
+            <label>自定义天数</label>
+            <input
+              type="number"
+              id="todoCustomDays"
+              placeholder="请输入重复天数"
+              min="1"
+              max="365"
+              style="
+                width: 100%;
+                padding: 0.8rem;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                font-size: 1rem;
+                outline: none;
+              "
+            />
+          </div>
+          <div class="form-group">
             <label>备注</label>
             <textarea
               id="todoNotes"
@@ -2073,6 +2867,20 @@
       let lotteryCount = 0; // 钻石抽奖次数，用于保底计算
       let disciplineLotteryCount = 0; // 自律币抽奖次数，用于保底计算
       let disciplineCoins = 0; // 自律币数量
+
+      // 等级和段位数据
+      let levelData = {
+        totalEfficientDays: 0, // 总高效天数
+        currentLevel: 1, // 当前等级（1-256）
+        currentExp: 0, // 当前等级经验值
+        levelExpRequired: 5, // 当前等级升级所需天数
+
+        currentRank: "青铜", // 当前段位
+        currentRankIndex: 0, // 段位索引（0-7）
+        currentStreak: 0, // 当前连续高效天数
+        rankStreakRequired: 3, // 当前段位升段所需连续天数
+        highestRank: "青铜", // 历史最高段位
+      };
 
       // 在顶部导航栏添加自律币显示
       function addDisciplineCoinsToHeader() {
@@ -2653,6 +3461,7 @@
           users[currentUser].disciplineCoins = disciplineCoins;
           users[currentUser].lotteryCount = lotteryCount;
           users[currentUser].disciplineLotteryCount = disciplineLotteryCount;
+          users[currentUser].levelData = levelData;
           localStorage.setItem("users", JSON.stringify(users));
         }
       }
@@ -3948,6 +4757,11 @@ notepad.exe
         // 设置记住我复选框状态
         document.getElementById("rememberMe").checked = rememberMe;
 
+        // 初始状态下，如果是注册模式，隐藏记住我选项
+        if (!isLoginMode) {
+          document.querySelector(".remember-me").style.display = "none";
+        }
+
         // 如果有记住的账号且用户选择了记住我，则自动填写
         if (rememberedUsername && rememberedPassword && rememberMe) {
           document.getElementById("username").value = rememberedUsername;
@@ -4005,17 +4819,22 @@ notepad.exe
           const button = document.getElementById("authButton");
           const toggleText = document.getElementById("toggleText");
           const toggleLink = document.getElementById("toggleLink");
+          const rememberMeDiv = document.querySelector(".remember-me");
 
           if (isLoginMode) {
             title.textContent = "欢迎回来";
             button.textContent = "登录";
             toggleText.textContent = "还没有账号？";
             toggleLink.textContent = "立即注册";
+            // 显示记住我选项
+            rememberMeDiv.style.display = "block";
           } else {
             title.textContent = "创建账号";
             button.textContent = "注册";
             toggleText.textContent = "已有账号？";
             toggleLink.textContent = "立即登录";
+            // 隐藏记住我选项
+            rememberMeDiv.style.display = "none";
           }
         });
 
@@ -4078,13 +4897,21 @@ notepad.exe
 
         users[username] = {
           password: password,
-          coins: 100,
+          coins: 0,
           diamonds: 0,
           lotteryCount: 0,
           disciplineLotteryCount: 0,
           totalCompleted: 0,
           checkInDays: 0,
           registerTime: new Date().toLocaleDateString(),
+          levelData: {
+            totalEfficientDays: 0,
+            currentLevel: 1,
+            currentExp: 0,
+            currentStreak: 0,
+            currentRank: 1,
+            lastEfficientDate: null,
+          },
         };
 
         localStorage.setItem("users", JSON.stringify(users));
@@ -4121,6 +4948,9 @@ notepad.exe
           ["todo", "tools", "shop", "profile"].indexOf(tab)
         ].classList.add("active");
 
+        // 保存当前活跃的页面
+        window.lastActiveTab = tab;
+
         if (tab === "todo") {
           loadTodos();
           updateTodoStats();
@@ -4128,6 +4958,59 @@ notepad.exe
 
         // 控制+按钮显示
         toggleAddTodoButton();
+      }
+
+      // 隐藏所有界面
+      function hideAllSections() {
+        const sections = [
+          "todoSection",
+          "toolsSection",
+          "shopSection",
+          "profileSection",
+        ];
+
+        sections.forEach((section) => {
+          const element = document.getElementById(section);
+          if (element) {
+            element.classList.remove("active");
+          }
+        });
+
+        // 隐藏空白页面容器
+        const emptyPageContainer =
+          document.getElementById("emptyPageContainer");
+        if (emptyPageContainer) {
+          emptyPageContainer.style.display = "none";
+        }
+
+        // 隐藏抽奖和兑换界面
+        const lotterySection = document.getElementById("lotterySection");
+        if (lotterySection) {
+          lotterySection.style.display = "none";
+        }
+
+        const exchangeSection = document.getElementById("exchangeSection");
+        if (exchangeSection) {
+          exchangeSection.style.display = "none";
+        }
+      }
+
+      // 更新顶部金币显示
+      function updateHeaderCoins() {
+        const coins = parseInt(localStorage.getItem("coins") || "0");
+        const headerCoins = document.getElementById("headerCoins");
+        if (headerCoins) {
+          headerCoins.textContent = coins;
+        }
+      }
+
+      // 更新顶部钻石显示
+      function updateHeaderDiamonds() {
+        const diamonds = parseInt(localStorage.getItem("diamonds") || "0");
+        const headerDiamonds = document.getElementById("headerDiamonds");
+        if (headerDiamonds) {
+          headerDiamonds.textContent = diamonds;
+        }
       }
 
       // 更新用户信息
@@ -4153,6 +5036,25 @@ notepad.exe
         lotteryCount = user.lotteryCount || 0;
         disciplineLotteryCount = user.disciplineLotteryCount || 0;
         updateDiamondDisplay();
+
+        // 加载等级和段位数据
+        if (user.levelData) {
+          levelData = user.levelData;
+        } else {
+          // 初始化等级和段位数据
+          levelData = {
+            totalEfficientDays: 0,
+            currentLevel: 1,
+            currentExp: 0,
+            currentStreak: 0,
+            currentRank: 1,
+            lastEfficientDate: null,
+          };
+          saveUserData();
+        }
+
+        // 更新等级和段位显示
+        updateLevelDisplay();
 
         // 更新头像显示
         loadAvatar();
@@ -4364,7 +5266,273 @@ notepad.exe
             reader.readAsDataURL(file);
           });
         }
+      }
 
+      // 等级和段位系统功能函数
+
+      // 获取等级所需经验（天数）
+      function getLevelExpRequired(level) {
+        // 等差数列：基础天数5天，公差3天
+        return 5 + (level - 1) * 3;
+      }
+
+      // 获取段位所需连续天数
+      function getRankStreakRequired(rank) {
+        // 等比数列：基础天数3天，公比1.5
+        const ranks = [
+          "青铜",
+          "白银",
+          "黄金",
+          "铂金",
+          "钻石",
+          "星耀",
+          "宗师",
+          "王者",
+        ];
+        if (rank < 1 || rank > ranks.length) return 0;
+
+        // 等比数列公式：3 * 1.5^(rank-1)
+        const requiredDays = Math.round(3 * Math.pow(1.5, rank - 1));
+        return requiredDays;
+      }
+
+      // 获取段位名称
+      function getRankName(rank) {
+        const ranks = [
+          "青铜",
+          "白银",
+          "黄金",
+          "铂金",
+          "钻石",
+          "星耀",
+          "宗师",
+          "王者",
+        ];
+        if (rank < 1 || rank > ranks.length) return "未定级";
+        return ranks[rank - 1];
+      }
+
+      // 更新等级和段位显示
+      function updateLevelDisplay() {
+        if (!currentUser) return;
+
+        // 更新个人资料页面的等级和段位显示
+        const profileLevelElement = document.getElementById("profileLevel");
+        const profileRankElement = document.getElementById("profileRank");
+
+        if (profileLevelElement) {
+          profileLevelElement.textContent = `等级 ${levelData.currentLevel}`;
+        }
+
+        if (profileRankElement) {
+          profileRankElement.textContent = `段位 ${getRankName(
+            levelData.currentRank
+          )}`;
+        }
+
+        // 更新顶部信息栏的等级和段位显示（如果存在）
+        const headerLevelElement = document.getElementById("headerLevel");
+        const headerRankElement = document.getElementById("headerRank");
+
+        if (headerLevelElement) {
+          headerLevelElement.textContent = `Lv.${levelData.currentLevel}`;
+        }
+
+        if (headerRankElement) {
+          headerRankElement.textContent = getRankName(levelData.currentRank);
+        }
+
+        // 更新段位铭牌显示
+        const headerRankBadge = document.getElementById("headerRankBadge");
+        if (headerRankBadge) {
+          const rankName = getRankName(levelData.currentRank);
+          headerRankBadge.textContent = rankName;
+
+          // 根据段位设置对应的CSS类
+          headerRankBadge.className = "rank-badge"; // 重置类名
+
+          // 添加对应的段位样式类
+          switch (levelData.currentRank) {
+            case 1:
+              headerRankBadge.classList.add("bronze");
+              break;
+            case 2:
+              headerRankBadge.classList.add("silver");
+              break;
+            case 3:
+              headerRankBadge.classList.add("gold");
+              break;
+            case 4:
+              headerRankBadge.classList.add("platinum");
+              break;
+            case 5:
+              headerRankBadge.classList.add("diamond");
+              break;
+            case 6:
+              headerRankBadge.classList.add("master");
+              break;
+            case 7:
+              headerRankBadge.classList.add("grandmaster");
+              break;
+            case 8:
+              headerRankBadge.classList.add("challenger");
+              break;
+            default:
+              headerRankBadge.classList.add("bronze");
+          }
+        }
+
+        // 更新用户名等级颜色
+        const headerUsername = document.getElementById("headerUsername");
+        const profileName = document.getElementById("profileName");
+
+        // 更新顶部用户名颜色
+        if (headerUsername) {
+          // 重置类名
+          headerUsername.className = "username";
+
+          // 根据等级设置对应的颜色类
+          const level = levelData.currentLevel;
+
+          if (level >= 210) {
+            // 210级以上显示金色+发光效果
+            headerUsername.classList.add("level-gold");
+            headerUsername.classList.add("level-high");
+          } else {
+            // 210级以下每30级换一个颜色，使用7种颜色循环
+            const colorIndex = (Math.floor((level - 1) / 30) % 7) + 1;
+            headerUsername.classList.add(`level-${colorIndex}`);
+          }
+        }
+
+        // 更新个人资料页面用户名颜色
+        if (profileName) {
+          // 重置类名
+          profileName.className = "username";
+
+          // 根据等级设置对应的颜色类
+          const level = levelData.currentLevel;
+
+          if (level >= 210) {
+            // 210级以上显示金色+发光效果
+            profileName.classList.add("level-gold");
+            profileName.classList.add("level-high");
+          } else {
+            // 210级以下每30级换一个颜色，使用7种颜色循环
+            const colorIndex = (Math.floor((level - 1) / 30) % 7) + 1;
+            profileName.classList.add(`level-${colorIndex}`);
+          }
+        }
+      }
+
+      // 添加高效天数
+      function addEfficientDay() {
+        if (!currentUser) return;
+
+        const today = new Date().toDateString();
+
+        // 检查是否今天已经记录过高效天数
+        if (levelData.lastEfficientDate === today) {
+          return; // 今天已经记录过，不再重复记录
+        }
+
+        // 更新总高效天数
+        levelData.totalEfficientDays++;
+
+        // 更新连续高效天数
+        if (levelData.lastEfficientDate) {
+          const lastDate = new Date(levelData.lastEfficientDate);
+          const todayDate = new Date();
+          const daysDiff = Math.floor(
+            (todayDate - lastDate) / (1000 * 60 * 60 * 24)
+          );
+
+          if (daysDiff === 1) {
+            // 连续高效
+            levelData.currentStreak++;
+          } else if (daysDiff > 1) {
+            // 中断连续，重置连续天数
+            levelData.currentStreak = 1;
+          }
+        } else {
+          // 第一次记录高效天数
+          levelData.currentStreak = 1;
+        }
+
+        levelData.lastEfficientDate = today;
+
+        // 检查等级升级
+        checkLevelUp();
+
+        // 检查段位升级
+        checkRankUp();
+
+        // 保存数据
+        saveUserData();
+
+        // 更新显示
+        updateLevelDisplay();
+      }
+
+      // 检查等级升级
+      function checkLevelUp() {
+        const maxLevel = 256;
+
+        while (levelData.currentLevel < maxLevel) {
+          const expRequired = getLevelExpRequired(levelData.currentLevel);
+
+          if (levelData.totalEfficientDays >= expRequired) {
+            // 升级
+            levelData.currentLevel++;
+
+            // 发放升级奖励：等级 × 10 金币
+            const reward = levelData.currentLevel * 10;
+            coins += reward;
+
+            showNotification(
+              "等级提升",
+              `恭喜！你已升级到 ${levelData.currentLevel} 级，获得 ${reward} 金币奖励！`
+            );
+          } else {
+            break;
+          }
+        }
+      }
+
+      // 检查段位升级
+      function checkRankUp() {
+        const maxRank = 8; // 王者段位
+
+        while (levelData.currentRank < maxRank) {
+          const streakRequired = getRankStreakRequired(levelData.currentRank);
+
+          if (levelData.currentStreak >= streakRequired) {
+            // 升段
+            const oldRank = levelData.currentRank;
+            levelData.currentRank++;
+
+            // 发放升段奖励：段位系数 × 500 金币
+            const reward = levelData.currentRank * 500;
+            coins += reward;
+
+            showNotification(
+              "段位提升",
+              `恭喜！你已晋升到 ${getRankName(
+                levelData.currentRank
+              )} 段位，获得 ${reward} 金币奖励！`
+            );
+          } else {
+            break;
+          }
+        }
+      }
+
+      // 重置连续天数（用于测试或特殊情况）
+      function resetStreak() {
+        levelData.currentStreak = 0;
+        levelData.lastEfficientDate = null;
+        saveUserData();
+        updateLevelDisplay();
         // 个性签名保存
         const profileSignatureInput =
           document.getElementById("profileSignature");
@@ -4376,6 +5544,77 @@ notepad.exe
         }
 
         // 头像上传功能已在其他位置实现，此处不再重复绑定事件
+      }
+
+      // 显示等级详情界面
+      function showLevelDetails() {
+        // 保存当前活跃的页面
+        const activeSection = document.querySelector(
+          ".todo-section.active, .tools-section.active, .shop-section.active, .profile-section.active"
+        );
+        if (activeSection) {
+          window.lastActiveTab = activeSection.id.replace("Section", "");
+        }
+
+        // 隐藏所有主要界面（使用CSS类系统）
+        const mainSections = [
+          "todoSection",
+          "toolsSection",
+          "shopSection",
+          "profileSection",
+        ];
+        mainSections.forEach((sectionId) => {
+          const section = document.getElementById(sectionId);
+          if (section) {
+            section.classList.remove("active");
+          }
+        });
+
+        // 显示等级详情界面
+        document.getElementById("levelDetailsSection").style.display = "flex";
+      }
+
+      // 显示段位详情界面
+      function showRankDetails() {
+        // 保存当前活跃的页面
+        const activeSection = document.querySelector(
+          ".todo-section.active, .tools-section.active, .shop-section.active, .profile-section.active"
+        );
+        if (activeSection) {
+          window.lastActiveTab = activeSection.id.replace("Section", "");
+        }
+
+        // 隐藏所有主要界面（使用CSS类系统）
+        const mainSections = [
+          "todoSection",
+          "toolsSection",
+          "shopSection",
+          "profileSection",
+        ];
+        mainSections.forEach((sectionId) => {
+          const section = document.getElementById(sectionId);
+          if (section) {
+            section.classList.remove("active");
+          }
+        });
+
+        // 显示段位详情界面
+        document.getElementById("rankDetailsSection").style.display = "flex";
+      }
+
+      // 隐藏详情界面
+      function hideDetails() {
+        // 隐藏所有详情界面
+        document.getElementById("levelDetailsSection").style.display = "none";
+        document.getElementById("rankDetailsSection").style.display = "none";
+
+        // 恢复之前活跃的页面，如果没有则默认显示"我的"界面
+        if (window.lastActiveTab) {
+          switchTab(window.lastActiveTab);
+        } else {
+          // 如果没有保存的活跃页面，默认显示"我的"界面
+          switchTab("profile");
+        }
       }
 
       // 登出功能
@@ -4400,8 +5639,32 @@ notepad.exe
             delete users[currentUser];
             localStorage.setItem("users", JSON.stringify(users));
 
-            // 清除所有本地存储数据
-            localStorage.clear();
+            // 只删除当前用户的个性化数据，而不是所有用户的数据
+            const userKeys = [
+              `avatar_${currentUser}`,
+              `bg_${currentUser}`,
+              `theme_${currentUser}`,
+              `contentOpacity_${currentUser}`,
+              `textBoxOpacity_${currentUser}`,
+              `blurAmount_${currentUser}`,
+              `signature_${currentUser}`,
+              `usedCodes_${currentUser}`,
+            ];
+
+            userKeys.forEach((key) => {
+              localStorage.removeItem(key);
+            });
+
+            // 清除当前用户的任务数据
+            const userTodos = JSON.parse(
+              localStorage.getItem("userTodos") || "{}"
+            );
+            delete userTodos[currentUser];
+            localStorage.setItem("userTodos", JSON.stringify(userTodos));
+
+            // 清除当前用户信息
+            localStorage.removeItem("currentUser");
+            currentUser = null;
 
             alert("账号已成功注销，所有数据已被删除。");
             location.reload();
@@ -4413,32 +5676,24 @@ notepad.exe
       function clearCache() {
         if (
           confirm(
-            "确定要清理缓存吗？这将清除所有本地存储数据，包括头像、背景图片和个性化设置，但不会删除账号信息和金币数据。"
+            "确定要清理缓存吗？这将清除当前用户的个性化设置数据（包括头像、背景图片、主题设置等），但不会删除账号信息和金币数据。"
           )
         ) {
           if (currentUser) {
-            // 保留核心用户数据
-            const users = JSON.parse(localStorage.getItem("users") || "{}");
-            const userData = users[currentUser];
+            // 只删除当前用户的个性化数据，而不是所有用户的数据
+            const userKeys = [
+              `avatar_${currentUser}`,
+              `bg_${currentUser}`,
+              `theme_${currentUser}`,
+              `contentOpacity_${currentUser}`,
+              `textBoxOpacity_${currentUser}`,
+              `blurAmount_${currentUser}`,
+              `signature_${currentUser}`,
+            ];
 
-            // 清除所有本地存储
-            const keysToKeep = [`users`, `currentUser`];
-            const keysToRemove = [];
-
-            for (let i = 0; i < localStorage.length; i++) {
-              const key = localStorage.key(i);
-              if (!keysToKeep.includes(key)) {
-                keysToRemove.push(key);
-              }
-            }
-
-            keysToRemove.forEach((key) => localStorage.removeItem(key));
-
-            // 重新设置用户数据
-            if (userData) {
-              users[currentUser] = userData;
-              localStorage.setItem("users", JSON.stringify(users));
-            }
+            userKeys.forEach((key) => {
+              localStorage.removeItem(key);
+            });
 
             alert("缓存清理完成！个性化设置已重置为默认值。");
             location.reload();
@@ -4562,6 +5817,9 @@ notepad.exe
         // 重置表单
         document.getElementById("addTodoForm").reset();
 
+        // 重置自定义天数输入框显示状态
+        document.getElementById("customDaysGroup").style.display = "none";
+
         // 自动填写1天后的时间
         const tomorrow = new Date();
         tomorrow.setDate(tomorrow.getDate() + 1);
@@ -4583,6 +5841,19 @@ notepad.exe
       function closeAddTodo() {
         document.getElementById("addTodoModal").style.display = "none";
         document.getElementById("addTodoForm").reset();
+        // 重置自定义天数输入框显示状态
+        document.getElementById("customDaysGroup").style.display = "none";
+      }
+
+      // 切换自定义天数输入框显示
+      function toggleCustomDays() {
+        const repeatType = document.getElementById("todoRepeat").value;
+        const customDaysGroup = document.getElementById("customDaysGroup");
+        if (repeatType === "custom") {
+          customDaysGroup.style.display = "block";
+        } else {
+          customDaysGroup.style.display = "none";
+        }
       }
 
       document
@@ -4594,6 +5865,8 @@ notepad.exe
           const deadline = document.getElementById("todoDeadline").value;
           const priority = document.getElementById("todoPriority").value;
           const notes = document.getElementById("todoNotes").value;
+          const repeatType = document.getElementById("todoRepeat").value;
+          const customDays = document.getElementById("todoCustomDays").value;
 
           const todo = {
             id: Date.now(),
@@ -4603,6 +5876,9 @@ notepad.exe
             notes: notes,
             completed: false,
             createdAt: new Date().toISOString(),
+            repeatType: repeatType,
+            customDays: customDays ? parseInt(customDays) : null,
+            lastCompleted: null,
           };
 
           todos.push(todo);
@@ -4664,6 +5940,22 @@ notepad.exe
             notesHtml = `<div class="todo-notes" style="font-size: 0.85rem; color: #666; margin-top: 0.3rem; padding-top: 0.3rem; border-top: 1px solid #eee;">备注: ${todo.notes}</div>`;
           }
 
+          // 获取重复周期显示文本
+          let repeatText = "";
+          if (todo.repeatType && todo.repeatType !== "none") {
+            const repeatMap = {
+              daily: "每天",
+              "3days": "每3天",
+              weekly: "每周",
+              monthly: "每月",
+              yearly: "每年",
+              custom: todo.customDays ? `每${todo.customDays}天` : "自定义",
+            };
+            repeatText = `<div class="todo-repeat" style="font-size: 0.85rem; color: #888; margin-top: 0.2rem;">重复: ${
+              repeatMap[todo.repeatType] || todo.repeatType
+            }</div>`;
+          }
+
           todoItem.innerHTML = `
                     <input type="checkbox" class="todo-checkbox" ${
                       todo.completed ? "checked" : ""
@@ -4676,11 +5968,20 @@ notepad.exe
                         <div class="todo-time">截止: ${new Date(
                           todo.deadline
                         ).toLocaleString()}</div>
+                        ${repeatText}
                         ${notesHtml}
                     </div>
                     <span class="todo-priority priority-${
                       todo.priority
                     }">${getPriorityText(todo.priority)}</span>
+                    <button class="delete-todo-btn" onclick="deleteTodo(${originalIndex}); event.stopPropagation();" title="删除任务">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 6h18"></path>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            <path d="M10 11v6"></path>
+                            <path d="M14 11v6"></path>
+                        </svg>
+                    </button>
                 `;
           todoList.appendChild(todoItem);
         });
@@ -4698,7 +5999,96 @@ notepad.exe
         const todo = todos.find((t) => t.id === id);
         if (todo) {
           const wasCompleted = todo.completed;
-          todo.completed = !todo.completed;
+
+          // 如果是重复任务且正在标记为完成，检查是否需要重置
+          if (
+            !todo.completed &&
+            todo.repeatType &&
+            todo.repeatType !== "none"
+          ) {
+            const now = new Date();
+            const lastCompleted = todo.lastCompleted
+              ? new Date(todo.lastCompleted)
+              : null;
+
+            // 检查是否应该重置任务
+            let shouldReset = false;
+
+            if (!lastCompleted) {
+              // 从未完成过，直接标记完成
+              shouldReset = false;
+            } else {
+              // 根据重复周期检查是否需要重置
+              const daysDiff = Math.floor(
+                (now - lastCompleted) / (1000 * 60 * 60 * 24)
+              );
+
+              switch (todo.repeatType) {
+                case "daily":
+                  shouldReset = daysDiff >= 1;
+                  break;
+                case "3days":
+                  shouldReset = daysDiff >= 3;
+                  break;
+                case "weekly":
+                  shouldReset = daysDiff >= 7;
+                  break;
+                case "monthly":
+                  shouldReset = daysDiff >= 30;
+                  break;
+                case "yearly":
+                  shouldReset = daysDiff >= 365;
+                  break;
+                case "custom":
+                  shouldReset = daysDiff >= (todo.customDays || 1);
+                  break;
+                default:
+                  shouldReset = false;
+              }
+            }
+
+            if (shouldReset) {
+              // 重置任务状态
+              todo.completed = false;
+              todo.lastCompleted = now.toISOString();
+
+              // 更新截止时间
+              const newDeadline = new Date(now);
+              switch (todo.repeatType) {
+                case "daily":
+                  newDeadline.setDate(newDeadline.getDate() + 1);
+                  break;
+                case "3days":
+                  newDeadline.setDate(newDeadline.getDate() + 3);
+                  break;
+                case "weekly":
+                  newDeadline.setDate(newDeadline.getDate() + 7);
+                  break;
+                case "monthly":
+                  newDeadline.setMonth(newDeadline.getMonth() + 1);
+                  break;
+                case "yearly":
+                  newDeadline.setFullYear(newDeadline.getFullYear() + 1);
+                  break;
+                case "custom":
+                  newDeadline.setDate(
+                    newDeadline.getDate() + (todo.customDays || 1)
+                  );
+                  break;
+              }
+              todo.deadline = newDeadline.toISOString().slice(0, 16);
+            } else {
+              // 正常标记完成
+              todo.completed = true;
+              todo.lastCompleted = now.toISOString();
+            }
+          } else {
+            // 非重复任务或取消完成状态
+            todo.completed = !todo.completed;
+            if (todo.completed && !wasCompleted) {
+              todo.lastCompleted = new Date().toISOString();
+            }
+          }
 
           if (todo.completed && !wasCompleted) {
             const users = JSON.parse(localStorage.getItem("users") || "{}");
@@ -4756,6 +6146,14 @@ notepad.exe
         document.getElementById("totalTasks").textContent = total;
         document.getElementById("completedTasks").textContent = completed;
         document.getElementById("pendingTasks").textContent = pending;
+      }
+
+      function deleteTodo(index) {
+        if (confirm("确定要删除这个待办事项吗？此操作不可撤销。")) {
+          todos.splice(index, 1);
+          saveTodos();
+          renderTodos();
+        }
       }
 
       function toggleShowAllTasks() {
@@ -4831,6 +6229,8 @@ notepad.exe
         document.getElementById("todoDeadline").value = todo.deadline;
         document.getElementById("todoPriority").value = todo.priority;
         document.getElementById("todoNotes").value = todo.notes || "";
+        document.getElementById("todoRepeat").value = todo.repeatType || "none";
+        document.getElementById("todoCustomDays").value = todo.customDays || "";
 
         // 修改提交处理
         const form = document.getElementById("addTodoForm");
@@ -4845,6 +6245,10 @@ notepad.exe
           todo.deadline = document.getElementById("todoDeadline").value;
           todo.priority = document.getElementById("todoPriority").value;
           todo.notes = document.getElementById("todoNotes").value;
+          todo.repeatType = document.getElementById("todoRepeat").value;
+          todo.customDays = document.getElementById("todoCustomDays").value
+            ? parseInt(document.getElementById("todoCustomDays").value)
+            : null;
 
           saveTodos();
           renderTodos();
@@ -5632,6 +7036,12 @@ www.github.com" rows="6" style="
         // Header with month/year and navigation
         const header = document.createElement("div");
         header.className = "calendar-header";
+        header.style.cssText = `
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1.5rem;
+        `;
 
         const title = document.createElement("h3");
         title.textContent = `${new Date(
@@ -5639,7 +7049,40 @@ www.github.com" rows="6" style="
           currentMonth,
           1
         ).toLocaleString("zh-CN", { month: "long" })} ${currentYear}`;
-        header.appendChild(title);
+
+        // 目标设定按钮
+        const goalButton = document.createElement("button");
+        goalButton.textContent = "🎯 目标设定";
+        goalButton.style.cssText = `
+          padding: 0.5rem 1rem;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          border: none;
+          border-radius: 20px;
+          font-size: 0.9rem;
+          font-weight: bold;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+        `;
+        goalButton.onmouseover = function () {
+          this.style.transform = "scale(1.05)";
+          this.style.boxShadow = "0 4px 15px rgba(102, 126, 234, 0.4)";
+        };
+        goalButton.onmouseout = function () {
+          this.style.transform = "scale(1)";
+          this.style.boxShadow = "0 2px 10px rgba(102, 126, 234, 0.3)";
+        };
+        goalButton.addEventListener("click", showGoalSettingModal);
+
+        const headerLeft = document.createElement("div");
+        headerLeft.appendChild(title);
+
+        const headerRight = document.createElement("div");
+        headerRight.appendChild(goalButton);
+
+        header.appendChild(headerLeft);
+        header.appendChild(headerRight);
 
         const nav = document.createElement("div");
         nav.className = "calendar-nav";
@@ -6008,6 +7451,14 @@ www.github.com" rows="6" style="
             };
             saveCalendarData();
 
+            // 检查目标进度
+            checkGoalProgress();
+
+            // 如果标记为高效学习，添加高效天数
+            if (efficient && typeof addEfficientDay === "function") {
+              addEfficientDay();
+            }
+
             // 显示保存成功动画效果
             const successMessage = document.createElement("div");
             successMessage.style.cssText = `
@@ -6160,6 +7611,804 @@ www.github.com" rows="6" style="
           console.log("网站屏蔽功能已启用，模式：", blockMode);
         }
       }
+
+      // 每日任务功能
+      const DAILY_TASKS_KEY = "dailyTasks";
+      const DAILY_TASKS_RESET_KEY = "dailyTasksLastReset";
+
+      // 默认每日任务
+      const defaultDailyTasks = [
+        {
+          id: 1,
+          title: "高效学习(检查自律日历)",
+          reward: 20,
+          completed: false,
+          type: "efficient_study",
+        },
+        {
+          id: 2,
+          title: "学习时长≥300分钟",
+          reward: 20,
+          completed: false,
+          type: "duration_300",
+        },
+        {
+          id: 3,
+          title: "学习时长≥450分钟",
+          reward: 20,
+          completed: false,
+          type: "duration_450",
+        },
+        {
+          id: 4,
+          title: "学习时长≥600分钟",
+          reward: 20,
+          completed: false,
+          type: "duration_600",
+        },
+        {
+          id: 5,
+          title: "完成当天截止的代办",
+          reward: 20,
+          completed: false,
+          type: "complete_today_todos",
+        },
+      ];
+
+      // 全部完成额外奖励
+      const ALL_COMPLETED_BONUS = 100;
+
+      // 显示每日任务界面
+      function showDailyTasks() {
+        // 检查是否需要重置每日任务
+        checkAndResetDailyTasks();
+
+        // 保存当前活跃的界面
+        const activeSection = document.querySelector(".todoSection.active, .toolsSection.active, .shopSection.active, .profileSection.active");
+        if (activeSection) {
+          // 提取section ID并转换为对应的tab名称
+          const sectionId = activeSection.id;
+          window.lastActiveTab = sectionId.replace("Section", "");
+        } else {
+          // 如果没有活跃的界面，默认保存todo
+          window.lastActiveTab = "todo";
+        }
+
+        // 隐藏其他界面
+        hideAllSections();
+
+        // 创建每日任务界面
+        const container = document.createElement("div");
+        container.className = "daily-tasks-container";
+        container.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.8);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 1001;
+          backdrop-filter: blur(5px);
+        `;
+
+        const modal = document.createElement("div");
+        modal.className = "daily-tasks-modal";
+        modal.style.cssText = `
+          background: white;
+          border-radius: 15px;
+          padding: 2rem;
+          max-width: 500px;
+          width: 90%;
+          max-height: 80vh;
+          overflow-y: auto;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        `;
+
+        modal.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <h2 style="color: var(--primary-color); margin: 0;">📋 每日任务</h2>
+            <button onclick="closeDailyTasks()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666;">&times;</button>
+          </div>
+          
+          <div style="margin-bottom: 1.5rem; text-align: center;">
+            <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">完成每日任务获取金币奖励 (每个任务20金币)</div>
+            <div style="font-size: 0.8rem; color: #4CAF50; margin-bottom: 0.5rem;">✨ 全部完成额外奖励100金币 ✨</div>
+            <div style="font-size: 0.8rem; color: #2196F3; margin-bottom: 0.5rem; background: #E3F2FD; padding: 0.5rem; border-radius: 5px;">
+              📊 任务完成状态会自动从自律日历中监测
+            </div>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+              <span style="font-size: 1.2rem; font-weight: bold;">今日进度:</span>
+              <span id="dailyProgress" style="font-size: 1.2rem; font-weight: bold; color: var(--primary-color);">0/5</span>
+            </div>
+          </div>
+          
+          <div id="dailyTasksList" style="margin-bottom: 1.5rem;"></div>
+          
+          <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 10px; margin-bottom: 1rem;">
+            <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">今日总奖励</div>
+            <div style="font-size: 1.5rem; font-weight: bold; color: var(--primary-color);">
+              <span id="totalReward">0</span> 金币
+            </div>
+          </div>
+          
+          <button onclick="claimAllRewards()" id="claimAllButton" style="
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+          ">领取全部奖励</button>
+        `;
+
+        container.appendChild(modal);
+        document.body.appendChild(container);
+
+        // 渲染任务列表
+        renderDailyTasks();
+      }
+
+      // 关闭每日任务界面
+      function closeDailyTasks() {
+        const container = document.querySelector(".daily-tasks-container");
+        if (container) {
+          container.remove();
+        }
+
+        // 恢复之前活跃的界面
+        // 检查是否有保存的活跃标签页，如果没有则默认显示todo界面
+        if (window.lastActiveTab) {
+          switchTab(window.lastActiveTab);
+        } else {
+          switchTab('todo');
+        }
+      }
+
+      // 渲染每日任务列表
+      function renderDailyTasks() {
+        const tasksList = document.getElementById("dailyTasksList");
+        const dailyTasks = getDailyTasks();
+
+        if (!tasksList) return;
+
+        tasksList.innerHTML = "";
+
+        let completedCount = 0;
+        let totalReward = 0;
+
+        dailyTasks.forEach((task) => {
+          if (task.completed) {
+            completedCount++;
+            totalReward += task.reward;
+          }
+
+          const taskElement = document.createElement("div");
+          taskElement.className = "daily-task-item";
+          taskElement.style.cssText = `
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: ${task.completed ? "#e8f5e8" : "#f8f9fa"};
+            border-radius: 10px;
+            border-left: 4px solid ${task.completed ? "#4CAF50" : "#ddd"};
+            transition: all 0.3s ease;
+          `;
+
+          taskElement.innerHTML = `
+            <div style="flex: 1;">
+              <div style="font-weight: bold; margin-bottom: 0.25rem; color: ${
+                task.completed ? "#333" : "#666"
+              };">${task.title}</div>
+              <div style="font-size: 0.8rem; color: #888;">奖励: ${
+                task.reward
+              } 金币</div>
+            </div>
+            <div>
+              ${
+                task.completed
+                  ? '<span style="color: #4CAF50; font-weight: bold;">✅ 已完成</span>'
+                  : '<span style="color: #FF9800; font-weight: bold;">⏳ 自动监测中</span>'
+              }
+            </div>
+          `;
+
+          tasksList.appendChild(taskElement);
+        });
+
+        // 更新进度和总奖励
+        document.getElementById(
+          "dailyProgress"
+        ).textContent = `${completedCount}/${dailyTasks.length}`;
+        document.getElementById("totalReward").textContent = totalReward;
+
+        // 更新领取按钮状态
+        const claimButton = document.getElementById("claimAllButton");
+        if (claimButton) {
+          if (completedCount === 0) {
+            claimButton.disabled = true;
+            claimButton.style.background = "#ccc";
+            claimButton.textContent = "暂无奖励可领取";
+          } else {
+            claimButton.disabled = false;
+            claimButton.style.background = "var(--primary-color)";
+            claimButton.textContent = `领取全部奖励 (${totalReward} 金币)`;
+          }
+        }
+      }
+
+      // 完成任务
+      function completeTask(taskId) {
+        const dailyTasks = getDailyTasks();
+        const taskIndex = dailyTasks.findIndex((task) => task.id === taskId);
+
+        if (taskIndex !== -1 && !dailyTasks[taskIndex].completed) {
+          dailyTasks[taskIndex].completed = true;
+          saveDailyTasks(dailyTasks);
+          renderDailyTasks();
+
+          // 显示完成任务动画
+          showTaskCompleteAnimation(taskId);
+
+          // 完成任务时添加高效天数（如果当天还没有添加过）
+          if (typeof addEfficientDay === "function") {
+            addEfficientDay();
+          }
+        }
+      }
+
+      // 领取全部奖励
+      function claimAllRewards() {
+        const dailyTasks = getDailyTasks();
+        let totalReward = 0;
+        let allCompleted = true;
+
+        dailyTasks.forEach((task) => {
+          if (task.completed && !task.claimed) {
+            totalReward += task.reward;
+            task.claimed = true;
+          }
+          if (!task.completed) {
+            allCompleted = false;
+          }
+        });
+
+        // 如果全部任务都完成，添加额外奖励
+        if (allCompleted && totalReward > 0) {
+          totalReward += ALL_COMPLETED_BONUS;
+        }
+
+        if (totalReward > 0) {
+          // 更新金币
+          const currentCoins = parseInt(localStorage.getItem("coins") || "0");
+          localStorage.setItem(
+            "coins",
+            (currentCoins + totalReward).toString()
+          );
+
+          // 保存任务状态
+          saveDailyTasks(dailyTasks);
+
+          // 更新界面显示
+          updateHeaderCoins();
+          renderDailyTasks();
+
+          // 显示奖励领取动画
+          showRewardAnimation(totalReward);
+        }
+      }
+
+      // 显示任务完成动画
+      function showTaskCompleteAnimation(taskId) {
+        const taskElement = document.querySelector(
+          `[onclick*="completeTask(${taskId})"]`
+        );
+        if (taskElement && taskElement.parentElement) {
+          const button = taskElement;
+          button.style.transform = "scale(0.9)";
+          button.style.background = "#4CAF50";
+          button.textContent = "✓";
+
+          setTimeout(() => {
+            button.style.transition = "all 0.3s ease";
+            button.style.transform = "scale(1)";
+          }, 300);
+        }
+      }
+
+      // 显示奖励领取动画
+      function showRewardAnimation(reward) {
+        const modal = document.querySelector(".daily-tasks-modal");
+        if (modal) {
+          const animation = document.createElement("div");
+          animation.style.cssText = `
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            font-weight: bold;
+            color: #FFD700;
+            animation: rewardBounce 1s ease-in-out;
+            z-index: 1002;
+          `;
+          animation.textContent = `+${reward} 金币`;
+
+          modal.style.position = "relative";
+          modal.appendChild(animation);
+
+          setTimeout(() => {
+            animation.remove();
+          }, 1000);
+        }
+      }
+
+      // 获取每日任务并自动检查完成状态
+      function getDailyTasks() {
+        const savedTasks = localStorage.getItem(DAILY_TASKS_KEY);
+        let tasks = [...defaultDailyTasks];
+
+        if (savedTasks) {
+          try {
+            tasks = JSON.parse(savedTasks);
+          } catch (e) {
+            console.error("解析每日任务数据错误:", e);
+          }
+        }
+
+        // 自动检查任务完成状态
+        const updatedTasks = checkTasksCompletion(tasks);
+
+        // 保存更新后的任务状态
+        saveDailyTasks(updatedTasks);
+
+        return updatedTasks;
+      }
+
+      // 检查当天截止的代办是否都已完成
+      function checkTodayTodosCompleted() {
+        const today = new Date().toISOString().split("T")[0];
+
+        // 获取当天截止的所有待办事项
+        const todayTodos = todos.filter((todo) => {
+          if (!todo.deadline) return false;
+
+          const todoDate = new Date(todo.deadline).toISOString().split("T")[0];
+          return todoDate === today;
+        });
+
+        // 如果没有当天截止的待办事项，则任务自动完成
+        if (todayTodos.length === 0) {
+          return true;
+        }
+
+        // 检查所有当天截止的待办事项是否都已完成
+        return todayTodos.every((todo) => todo.completed);
+      }
+
+      // 自动检查任务完成状态
+      function checkTasksCompletion(tasks) {
+        const today = new Date().toISOString().split("T")[0];
+        const todayData = calendarData[today];
+
+        return tasks.map((task) => {
+          let completed = task.completed;
+
+          // 如果任务未完成，根据类型自动检查
+          if (!completed) {
+            switch (task.type) {
+              case "efficient_study":
+                // 高效学习：检查效率标记为高效，或者有学习记录且效率为高效
+                completed = todayData && todayData.efficient;
+                break;
+              case "duration_300":
+                // 学习时长≥300分钟
+                completed = todayData && todayData.duration >= 300;
+                break;
+              case "duration_450":
+                // 学习时长≥450分钟
+                completed = todayData && todayData.duration >= 450;
+                break;
+              case "duration_600":
+                // 学习时长≥600分钟
+                completed = todayData && todayData.duration >= 600;
+                break;
+              case "complete_today_todos":
+                // 完成当天截止的代办：检查所有当天截止的代办是否都已完成
+                completed = checkTodayTodosCompleted();
+                break;
+            }
+          }
+
+          return {
+            ...task,
+            completed: completed,
+          };
+        });
+      }
+
+      // 保存每日任务
+      function saveDailyTasks(tasks) {
+        try {
+          localStorage.setItem(DAILY_TASKS_KEY, JSON.stringify(tasks));
+        } catch (e) {
+          console.error("保存每日任务数据错误:", e);
+        }
+      }
+
+      // 检查并重置每日任务
+      function checkAndResetDailyTasks() {
+        const today = new Date().toDateString();
+        const lastReset = localStorage.getItem(DAILY_TASKS_RESET_KEY);
+
+        if (lastReset !== today) {
+          // 重置任务
+          const resetTasks = defaultDailyTasks.map((task) => ({
+            ...task,
+            completed: false,
+            claimed: false,
+          }));
+
+          saveDailyTasks(resetTasks);
+          localStorage.setItem(DAILY_TASKS_RESET_KEY, today);
+        }
+      }
+
+      // 目标设定相关功能
+      let userGoal = {
+        consecutiveDays: 0,
+        penaltyAmount: 0,
+        startDate: null,
+        currentStreak: 0,
+        completed: false,
+      };
+
+      // 加载用户目标设置
+      function loadUserGoal() {
+        const savedGoal = localStorage.getItem("userGoal");
+        if (savedGoal) {
+          try {
+            userGoal = JSON.parse(savedGoal);
+            // 检查目标是否已完成
+            checkGoalProgress();
+          } catch (e) {
+            console.error("解析用户目标数据错误:", e);
+          }
+        }
+      }
+
+      // 保存用户目标设置
+      function saveUserGoal() {
+        try {
+          localStorage.setItem("userGoal", JSON.stringify(userGoal));
+        } catch (e) {
+          console.error("保存用户目标数据错误:", e);
+        }
+      }
+
+      // 显示目标设定模态框
+      function showGoalSettingModal() {
+        // 创建模态框
+        const modal = document.createElement("div");
+        modal.id = "goalModal";
+        modal.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 1000;
+        `;
+
+        const modalContent = document.createElement("div");
+        modalContent.style.cssText = `
+          background: white;
+          padding: 2rem;
+          border-radius: 15px;
+          max-width: 500px;
+          width: 90%;
+          max-height: 80vh;
+          overflow-y: auto;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        `;
+
+        modalContent.innerHTML = `
+          <h3 style="margin-bottom: 1.5rem; text-align: center; color: #333;">🎯 连续自律目标设定</h3>
+          
+          <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">连续高效天数目标：</label>
+            <input type="number" id="goalDays" min="1" max="365" value="${
+              userGoal.consecutiveDays || 7
+            }" 
+                   style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+          </div>
+          
+          <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">失败扣除金币数：</label>
+            <input type="number" id="goalPenalty" min="0" value="${
+              userGoal.penaltyAmount || 100
+            }" 
+                   style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+            <small style="color: #666; font-size: 0.8rem;">成功奖励：${
+              (userGoal.penaltyAmount || 100) * 0.5
+            } 金币</small>
+          </div>
+          
+          ${
+            userGoal.consecutiveDays > 0
+              ? `
+          <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+            <h4 style="margin: 0 0 0.5rem 0; color: #333;">当前进度</h4>
+            <p style="margin: 0.25rem 0; color: #666;">目标：连续 ${
+              userGoal.consecutiveDays
+            } 天高效学习</p>
+            <p style="margin: 0.25rem 0; color: #666;">当前连续：${
+              userGoal.currentStreak
+            } 天</p>
+            <p style="margin: 0.25rem 0; color: #666;">开始日期：${
+              userGoal.startDate || "未开始"
+            }</p>
+            <p style="margin: 0.25rem 0; color: ${
+              userGoal.completed ? "#4CAF50" : "#666"
+            };">
+              状态：${userGoal.completed ? "🎉 已完成" : "进行中"}
+            </p>
+          </div>
+          `
+              : ""
+          }
+          
+          <div style="display: flex; gap: 1rem;">
+            <button id="saveGoal" style="flex: 1; padding: 0.75rem; background: #4CAF50; color: white; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">
+              保存目标
+            </button>
+            <button id="closeGoal" style="flex: 1; padding: 0.75rem; background: #f44336; color: white; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">
+              关闭
+            </button>
+          </div>
+        `;
+
+        modal.appendChild(modalContent);
+        document.body.appendChild(modal);
+
+        // 事件监听
+        document
+          .getElementById("goalPenalty")
+          .addEventListener("input", function () {
+            const penalty = parseInt(this.value) || 0;
+            const reward = Math.floor(penalty * 0.5);
+            this.nextElementSibling.textContent = `成功奖励：${reward} 金币`;
+          });
+
+        document
+          .getElementById("saveGoal")
+          .addEventListener("click", saveGoalSettings);
+        document.getElementById("closeGoal").addEventListener("click", () => {
+          document.body.removeChild(modal);
+        });
+
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) {
+            document.body.removeChild(modal);
+          }
+        });
+      }
+
+      // 保存目标设置
+      function saveGoalSettings() {
+        const daysInput = document.getElementById("goalDays");
+        const penaltyInput = document.getElementById("goalPenalty");
+
+        const consecutiveDays = parseInt(daysInput.value) || 0;
+        const penaltyAmount = Math.max(0, parseInt(penaltyInput.value) || 0);
+
+        if (consecutiveDays <= 0) {
+          alert("请输入有效的连续天数目标（大于0）");
+          return;
+        }
+
+        if (penaltyAmount < 0) {
+          alert("惩罚金额不能为负数");
+          return;
+        }
+
+        // 限制惩罚金额不能超过总天数*200
+        const maxPenalty = consecutiveDays * 200;
+        if (penaltyAmount > maxPenalty) {
+          alert(`惩罚金额不能超过 ${maxPenalty} 金币（总天数 × 200）`);
+          return;
+        }
+
+        // 如果是新目标或目标天数改变，重置进度
+        if (userGoal.consecutiveDays !== consecutiveDays) {
+          userGoal = {
+            consecutiveDays: consecutiveDays,
+            penaltyAmount: penaltyAmount,
+            startDate: new Date().toISOString().split("T")[0],
+            currentStreak: 0,
+            completed: false,
+          };
+        } else {
+          // 只更新惩罚金额
+          userGoal.penaltyAmount = penaltyAmount;
+        }
+
+        saveUserGoal();
+        checkGoalProgress();
+
+        // 关闭模态框
+        const modal = document.getElementById("goalModal");
+        if (modal) {
+          document.body.removeChild(modal);
+        }
+
+        // 显示成功消息
+        showGoalMessage(
+          `目标已保存！连续 ${consecutiveDays} 天高效学习，失败扣除 ${penaltyAmount} 金币，成功奖励 ${Math.floor(
+            penaltyAmount * 0.5
+          )} 金币`
+        );
+      }
+
+      // 检查目标进度
+      function checkGoalProgress() {
+        if (userGoal.consecutiveDays === 0) return;
+
+        const today = new Date().toISOString().split("T")[0];
+        const todayData = calendarData[today];
+
+        // 如果是新的一天，检查昨天的进度
+        if (userGoal.startDate && userGoal.startDate !== today) {
+          const yesterday = new Date();
+          yesterday.setDate(yesterday.getDate() - 1);
+          const yesterdayStr = yesterday.toISOString().split("T")[0];
+          const yesterdayData = calendarData[yesterdayStr];
+
+          if (yesterdayData && yesterdayData.efficient) {
+            // 昨天高效，增加连续天数
+            userGoal.currentStreak++;
+          } else {
+            // 昨天未高效，重置连续天数
+            userGoal.currentStreak = 0;
+
+            // 如果昨天有数据但不是高效，触发惩罚
+            if (yesterdayData) {
+              applyGoalPenalty();
+            }
+          }
+
+          // 检查是否完成目标
+          if (userGoal.currentStreak >= userGoal.consecutiveDays) {
+            userGoal.completed = true;
+            applyGoalReward();
+          }
+
+          saveUserGoal();
+        }
+
+        // 更新按钮显示
+        updateGoalButton();
+      }
+
+      // 应用目标惩罚
+      function applyGoalPenalty() {
+        if (userGoal.penaltyAmount > 0) {
+          const currentCoins = parseInt(localStorage.getItem("coins") || "0");
+          const newCoins = currentCoins - userGoal.penaltyAmount;
+          // 允许金币总数为负数
+          localStorage.setItem("coins", newCoins.toString());
+          updateHeaderCoins();
+
+          showGoalMessage(`连续自律中断！扣除 ${userGoal.penaltyAmount} 金币`);
+        }
+      }
+
+      // 应用目标奖励
+      function applyGoalReward() {
+        if (userGoal.penaltyAmount > 0 && userGoal.completed) {
+          const reward = Math.floor(userGoal.penaltyAmount * 0.5);
+          const currentCoins = parseInt(localStorage.getItem("coins") || "0");
+          localStorage.setItem("coins", (currentCoins + reward).toString());
+          updateHeaderCoins();
+
+          showGoalMessage(`🎉 恭喜完成连续自律目标！获得 ${reward} 金币奖励`);
+        }
+      }
+
+      // 显示目标消息
+      function showGoalMessage(message) {
+        // 创建消息提示
+        const messageDiv = document.createElement("div");
+        messageDiv.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: ${message.includes("恭喜") ? "#4CAF50" : "#f44336"};
+          color: white;
+          padding: 1rem 1.5rem;
+          border-radius: 8px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+          z-index: 1001;
+          animation: slideIn 0.3s ease;
+        `;
+        messageDiv.textContent = message;
+
+        document.body.appendChild(messageDiv);
+
+        setTimeout(() => {
+          messageDiv.style.animation = "slideOut 0.3s ease";
+          setTimeout(() => {
+            if (messageDiv.parentNode) {
+              document.body.removeChild(messageDiv);
+            }
+          }, 300);
+        }, 3000);
+      }
+
+      // 更新目标按钮显示
+      function updateGoalButton() {
+        const goalButton = document.querySelector(
+          '[onclick="showGoalSettingModal()"]'
+        );
+        if (goalButton) {
+          if (userGoal.consecutiveDays > 0) {
+            if (userGoal.completed) {
+              goalButton.textContent = `🎉 目标完成`;
+              goalButton.style.background =
+                "linear-gradient(135deg, #4CAF50 0%, #45a049 100%)";
+            } else {
+              goalButton.textContent = `🎯 ${userGoal.currentStreak}/${userGoal.consecutiveDays}天`;
+              goalButton.style.background =
+                "linear-gradient(135deg, #FF9800 0%, #F57C00 100%)";
+            }
+          } else {
+            goalButton.textContent = "🎯 目标设定";
+            goalButton.style.background =
+              "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
+          }
+        }
+      }
+
+      // 初始化时加载用户目标
+      loadUserGoal();
+
+      // 添加奖励动画CSS
+      const style = document.createElement("style");
+      style.textContent = `
+        @keyframes rewardBounce {
+          0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+          50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+          100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+        
+        .daily-task-item:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        @keyframes slideIn {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOut {
+          from { transform: translateX(0); opacity: 1; }
+          to { transform: translateX(100%); opacity: 0; }
+        }
+      `;
+      document.head.appendChild(style);
     </script>
   </body>
 </html>
