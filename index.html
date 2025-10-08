@@ -1470,6 +1470,21 @@
         <div id="todoSection" class="todo-section">
           <div class="todo-header">
             <h2>我的代办</h2>
+            <button id="sortTodoBtn" class="sort-btn" onclick="sortTodosByPriority()" style="
+              padding: 0.5rem 1rem;
+              background: #4CAF50;
+              color: white;
+              border: none;
+              border-radius: 8px;
+              cursor: pointer;
+              font-size: 0.9rem;
+              display: flex;
+              align-items: center;
+              gap: 0.5rem;
+            ">
+              <i>📊</i>
+              <span>优先级排序</span>
+            </button>
           </div>
 
           <div class="todo-stats">
@@ -2960,7 +2975,59 @@
         setTimeout(() => {
           addDisciplineCoinsToHeader();
         }, 100);
+        
+        // 设置每分钟整时检查一次过期任务
+        setupExpiredTasksCheck();
       });
+      
+      // 设置每分钟整时检查过期任务的定时器
+      function setupExpiredTasksCheck() {
+        // 立即执行一次检查
+        checkAndCleanExpiredTasks();
+        
+        // 计算距离下一个整分钟的时间（毫秒）
+        const now = new Date();
+        const millisecondsUntilNextMinute = (60 - now.getSeconds()) * 1000;
+        
+        // 在下一个整分钟时启动定时器
+        setTimeout(() => {
+          // 每分钟执行一次检查
+          checkAndCleanExpiredTasks();
+          setInterval(checkAndCleanExpiredTasks, 60000); // 60000毫秒 = 1分钟
+        }, millisecondsUntilNextMinute);
+      }
+      
+      // 检查并清理过期任务
+      function checkAndCleanExpiredTasks() {
+        if (!currentUser) return;
+        
+        // 获取当前用户的所有任务
+        const userTodos = JSON.parse(localStorage.getItem("todos") || "{}");
+        let todos = userTodos[currentUser] || [];
+        
+        // 记录原始任务数量
+        const originalLength = todos.length;
+        
+        // 过滤掉过期的任务
+        todos = todos.filter((todo) => {
+          // 检查任务是否已过期（如果有截止日期且未完成）
+          return !todo.deadline || 
+            todo.completed || 
+            new Date(todo.deadline) >= new Date();
+        });
+        
+        // 如果有任务被删除了，保存更新后的列表并刷新UI
+        if (todos.length < originalLength) {
+          userTodos[currentUser] = todos;
+          localStorage.setItem("todos", JSON.stringify(userTodos));
+          
+          // 只有在当前显示的是代办界面时才刷新UI
+          const todoSection = document.getElementById("todoSection");
+          if (todoSection && todoSection.classList.contains("active")) {
+            loadTodos(); // 重新加载并渲染任务列表
+          }
+        }
+      }
 
       // 显示公告板界面
       function showAnnouncementBoard() {
@@ -4733,20 +4800,68 @@ notepad.exe
         }
       }
 
-      // 控制+按钮在代办界面显示
-      function toggleAddTodoButton() {
-        const todoSection = document.getElementById("todoSection");
-        const addTodoBtn = document.getElementById("addTodoBtn");
-
-        // 只在代办界面显示+按钮
-        if (todoSection.classList.contains("active")) {
-          addTodoBtn.style.opacity = "1";
-          addTodoBtn.style.visibility = "visible";
-        } else {
-          addTodoBtn.style.opacity = "0";
-          addTodoBtn.style.visibility = "hidden";
+      // 排序代办任务
+        function sortTodosByPriority() {
+          // 按优先级排序：高 > 中 > 低
+          const priorityOrder = { high: 3, medium: 2, low: 1 };
+          
+          todos.sort((a, b) => {
+            // 先按完成状态排序，未完成的在前
+            if (a.completed !== b.completed) {
+              return a.completed ? 1 : -1;
+            }
+            
+            // 再按优先级排序
+            const priorityA = priorityOrder[a.priority] || 0;
+            const priorityB = priorityOrder[b.priority] || 0;
+            return priorityB - priorityA;
+          });
+          
+          saveTodos();
+          renderTodos();
+          
+          // 显示排序成功提示
+          showNotification("任务已按优先级排序", "success");
         }
-      }
+        
+        // 显示通知提示
+        function showNotification(message, type = "info") {
+          const notification = document.createElement("div");
+          notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            background: ${type === "success" ? "#4CAF50" : "#2196F3"};
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            animation: slideIn 0.3s ease, slideOut 0.3s ease 2s;
+          `;
+          notification.textContent = message;
+          
+          document.body.appendChild(notification);
+          
+          setTimeout(() => {
+            document.body.removeChild(notification);
+          }, 2300);
+        }
+        
+        // 控制+按钮在代办界面显示
+        function toggleAddTodoButton() {
+          const todoSection = document.getElementById("todoSection");
+          const addTodoBtn = document.getElementById("addTodoBtn");
+          
+          // 只在代办界面显示+按钮
+          if (todoSection.classList.contains("active")) {
+            addTodoBtn.style.opacity = "1";
+            addTodoBtn.style.visibility = "visible";
+          } else {
+            addTodoBtn.style.opacity = "0";
+            addTodoBtn.style.visibility = "hidden";
+          }
+        }
 
       // 跳过欢迎动画
       function skipWelcomeAnimation() {
@@ -5060,7 +5175,20 @@ notepad.exe
         if (!currentUser) return;
 
         const users = JSON.parse(localStorage.getItem("users") || "{}");
-        const user = users[currentUser];
+        let user = users[currentUser];
+        
+        // 如果用户对象不存在，创建默认用户对象
+        if (!user) {
+          user = {
+            coins: 0,
+            diamonds: 0,
+            registerTime: new Date().toLocaleDateString(),
+            lotteryCount: 0,
+            disciplineLotteryCount: 0
+          };
+          users[currentUser] = user;
+          localStorage.setItem("users", JSON.stringify(users));
+        }
 
         // 更新顶部信息栏
         document.getElementById("headerCoins").textContent = user.coins || 0;
@@ -5931,16 +6059,21 @@ notepad.exe
 
       function saveTodos() {
         if (currentUser) {
-          // 过滤掉无效的待办事项：空白名称或截止日期为"Invalid Date"
+          // 过滤掉无效或过期的待办事项
           todos = todos.filter((todo) => {
             // 检查是否有空白名称
             const hasValidContent = todo.content && todo.content.trim() !== "";
 
             // 检查截止日期是否有效（删除截止日期为"Invalid Date"的待办项）
-            const hasValidDeadline =
+            const hasValidDeadline = 
               !todo.deadline || !isNaN(new Date(todo.deadline).getTime());
 
-            return hasValidContent && hasValidDeadline;
+            // 检查任务是否已过期（如果有截止日期且未完成）
+            const isNotExpired = !todo.deadline || 
+              todo.completed || 
+              new Date(todo.deadline) >= new Date();
+
+            return hasValidContent && hasValidDeadline && isNotExpired;
           });
 
           const userTodos = JSON.parse(localStorage.getItem("todos") || "{}");
@@ -5953,6 +6086,22 @@ notepad.exe
         if (currentUser) {
           const userTodos = JSON.parse(localStorage.getItem("todos") || "{}");
           todos = userTodos[currentUser] || [];
+          
+          // 过滤掉过期的代办任务
+          const originalLength = todos.length;
+          todos = todos.filter((todo) => {
+            // 检查任务是否已过期（如果有截止日期且未完成）
+            return !todo.deadline || 
+              todo.completed || 
+              new Date(todo.deadline) >= new Date();
+          });
+          
+          // 如果有任务被删除了，保存更新后的列表
+          if (todos.length < originalLength) {
+            userTodos[currentUser] = todos;
+            localStorage.setItem("todos", JSON.stringify(userTodos));
+          }
+          
           renderTodos();
         }
       }
@@ -6042,10 +6191,10 @@ notepad.exe
         if (todo) {
           const wasCompleted = todo.completed;
 
-          // 如果是重复任务且正在标记为完成，检查是否需要重置
+          // 如果是重复任务且正在标记为完成
           if (
-            !todo.completed &&
-            todo.repeatType &&
+            !todo.completed && // 当前任务未完成
+            todo.repeatType && // 有重复周期设置
             todo.repeatType !== "none"
           ) {
             const now = new Date();
@@ -6053,77 +6202,57 @@ notepad.exe
               ? new Date(todo.lastCompleted)
               : null;
 
-            // 检查是否应该重置任务
-            let shouldReset = false;
+            // 检查是否应该创建新的重复任务
+            let shouldCreateNewInstance = false;
 
             if (!lastCompleted) {
-              // 从未完成过，直接标记完成
-              shouldReset = false;
+              // 从未完成过，第一次完成时应该创建新实例
+              shouldCreateNewInstance = true;
             } else {
-              // 根据重复周期检查是否需要重置
+              // 根据重复周期检查是否应该创建新实例
               const daysDiff = Math.floor(
                 (now - lastCompleted) / (1000 * 60 * 60 * 24)
               );
 
               switch (todo.repeatType) {
                 case "daily":
-                  shouldReset = daysDiff >= 1;
+                  shouldCreateNewInstance = daysDiff >= 1;
                   break;
                 case "3days":
-                  shouldReset = daysDiff >= 3;
+                  shouldCreateNewInstance = daysDiff >= 3;
                   break;
                 case "weekly":
-                  shouldReset = daysDiff >= 7;
+                  shouldCreateNewInstance = daysDiff >= 7;
                   break;
                 case "monthly":
-                  shouldReset = daysDiff >= 30;
+                  shouldCreateNewInstance = daysDiff >= 30;
                   break;
                 case "yearly":
-                  shouldReset = daysDiff >= 365;
+                  shouldCreateNewInstance = daysDiff >= 365;
                   break;
                 case "custom":
-                  shouldReset = daysDiff >= (todo.customDays || 1);
+                  shouldCreateNewInstance = daysDiff >= (todo.customDays || 1);
                   break;
                 default:
-                  shouldReset = false;
+                  shouldCreateNewInstance = false;
               }
             }
 
-            if (shouldReset) {
-              // 重置任务状态
-              todo.completed = false;
-              todo.lastCompleted = now.toISOString();
-
-              // 更新截止时间
-              const newDeadline = new Date(now);
-              switch (todo.repeatType) {
-                case "daily":
-                  newDeadline.setDate(newDeadline.getDate() + 1);
-                  break;
-                case "3days":
-                  newDeadline.setDate(newDeadline.getDate() + 3);
-                  break;
-                case "weekly":
-                  newDeadline.setDate(newDeadline.getDate() + 7);
-                  break;
-                case "monthly":
-                  newDeadline.setMonth(newDeadline.getMonth() + 1);
-                  break;
-                case "yearly":
-                  newDeadline.setFullYear(newDeadline.getFullYear() + 1);
-                  break;
-                case "custom":
-                  newDeadline.setDate(
-                    newDeadline.getDate() + (todo.customDays || 1)
-                  );
-                  break;
-              }
-              todo.deadline = newDeadline.toISOString().slice(0, 16);
-            } else {
-              // 正常标记完成
-              todo.completed = true;
-              todo.lastCompleted = now.toISOString();
+            if (shouldCreateNewInstance) {
+              // 创建新的重复任务实例
+              const newTodo = {
+                ...todo,
+                id: Date.now(), // 新的ID
+                completed: false, // 新任务未完成
+                deadline: calculateNextDeadline(todo.deadline, todo.repeatType, todo.customDays), // 计算下一个截止日期
+                lastCompleted: now.toISOString()
+              };
+              todos.push(newTodo);
             }
+
+            // 标记当前任务为完成
+            todo.completed = true;
+            todo.lastCompleted = now.toISOString();
           } else {
             // 非重复任务或取消完成状态
             todo.completed = !todo.completed;
@@ -6132,9 +6261,41 @@ notepad.exe
             }
           }
 
+          // 计算下一个截止日期的辅助函数
+          function calculateNextDeadline(currentDeadline, repeatType, customDays) {
+            const nextDate = new Date(currentDeadline);
+            
+            switch (repeatType) {
+              case "daily":
+                nextDate.setDate(nextDate.getDate() + 1);
+                break;
+              case "3days":
+                nextDate.setDate(nextDate.getDate() + 3);
+                break;
+              case "weekly":
+                nextDate.setDate(nextDate.getDate() + 7);
+                break;
+              case "monthly":
+                nextDate.setMonth(nextDate.getMonth() + 1);
+                break;
+              case "yearly":
+                nextDate.setFullYear(nextDate.getFullYear() + 1);
+                break;
+              case "custom":
+                nextDate.setDate(nextDate.getDate() + (customDays || 1));
+                break;
+            }
+            
+            return nextDate.toISOString().slice(0, 16);
+          }
+
           if (todo.completed && !wasCompleted) {
             const users = JSON.parse(localStorage.getItem("users") || "{}");
-            users[currentUser].totalCompleted =
+            // 确保currentUser对象存在
+            if (!users[currentUser]) {
+              users[currentUser] = {};
+            }
+            users[currentUser].totalCompleted = 
               (users[currentUser].totalCompleted || 0) + 1;
 
             // 更新每日挑战进度
@@ -7029,6 +7190,9 @@ www.github.com" rows="6" style="
       }
 
       function showLearningCalendar() {
+        // 同步完成任务数到日历
+        syncCompletedTasksToCalendar();
+        
         // 调用showEmptyPage来准备容器，设置标题为"自律日历"
         showEmptyPage("自律日历");
 
@@ -7260,8 +7424,7 @@ www.github.com" rows="6" style="
 
         last14Days.forEach((day) => {
           const dayData = calendarData[day.date];
-          const hasData =
-            dayData && (dayData.duration > 0 || dayData.taskCount > 0);
+          const hasData = dayData; // 只要有数据就显示柱状图
 
           const bar = document.createElement("div");
           bar.className = `chart-bar ${
@@ -7272,7 +7435,7 @@ www.github.com" rows="6" style="
               : "inefficient"
           }`;
           bar.style.height = `${
-            hasData ? (dayData.duration / maxDuration) * 150 : 5
+            hasData ? (dayData.duration > 0 ? (dayData.duration / maxDuration) * 150 : 5) : 5
           }px`;
 
           const valueLabel = document.createElement("div");
@@ -7367,6 +7530,7 @@ www.github.com" rows="6" style="
         taskCountInput.type = "number";
         taskCountInput.min = "0";
         taskCountInput.value = existingData?.taskCount || "0";
+        taskCountInput.disabled = true; // 禁止修改任务数
         taskCountInput.style.cssText = `
           width: 100%;
           padding: 0.8rem;
@@ -7624,6 +7788,41 @@ www.github.com" rows="6" style="
         } catch (e) {
           console.error("保存日历数据错误:", e);
           return false;
+        }
+      }
+
+      // 自动从代办界面同步每日完成任务数到日历
+      function syncCompletedTasksToCalendar() {
+        if (!currentUser) return;
+        
+        loadCalendarData();
+        loadTodos();
+        
+        const today = new Date().toISOString().split('T')[0];
+        
+        // 统计今天已完成的任务数
+        const todayCompletedTasks = todos.filter(todo => {
+          // 检查任务是否已完成
+          if (!todo.completed) return false;
+          
+          // 检查任务是否有完成时间且是今天的
+          if (todo.lastCompleted) {
+            const completedDate = new Date(todo.lastCompleted).toISOString().split('T')[0];
+            return completedDate === today;
+          }
+          
+          // 对于没有完成时间的已完成任务，也计入统计
+          return true;
+        }).length;
+        
+        // 获取今天的日历数据
+        const todayData = calendarData[today] || { taskCount: 0, duration: 0, efficient: false };
+        
+        // 如果任务数发生变化，更新日历数据
+        if (todayData.taskCount !== todayCompletedTasks) {
+          todayData.taskCount = todayCompletedTasks;
+          calendarData[today] = todayData;
+          saveCalendarData();
         }
       }
 
@@ -8175,16 +8374,16 @@ www.github.com" rows="6" style="
             <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">连续高效天数目标：</label>
             <input type="number" id="goalDays" min="1" max="365" value="${
               userGoal.consecutiveDays || 7
-            }" 
-                   style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+            }" ${userGoal.consecutiveDays > 0 && !userGoal.completed ? 'disabled' : ''}
+                   style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem;${userGoal.consecutiveDays > 0 && !userGoal.completed ? ' background-color: #f5f5f5; cursor: not-allowed;' : ''}">
           </div>
           
           <div style="margin-bottom: 1.5rem;">
             <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">失败扣除金币数：</label>
             <input type="number" id="goalPenalty" min="0" value="${
               userGoal.penaltyAmount || 100
-            }" 
-                   style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+            }" ${userGoal.consecutiveDays > 0 && !userGoal.completed ? 'disabled' : ''}
+                   style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem;${userGoal.consecutiveDays > 0 && !userGoal.completed ? ' background-color: #f5f5f5; cursor: not-allowed;' : ''}">
             <small style="color: #666; font-size: 0.8rem;">成功奖励：${
               (userGoal.penaltyAmount || 100) * 0.5
             } 金币</small>
@@ -8215,9 +8414,14 @@ www.github.com" rows="6" style="
           }
           
           <div style="display: flex; gap: 1rem;">
-            <button id="saveGoal" style="flex: 1; padding: 0.75rem; background: #4CAF50; color: white; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">
+            <button id="saveGoal" style="flex: 1; padding: 0.75rem; background: #4CAF50; color: white; border: none; border-radius: 8px; font-size: 1rem; cursor: ${userGoal.consecutiveDays > 0 && !userGoal.completed ? 'not-allowed;' : 'pointer;'}" ${userGoal.consecutiveDays > 0 && !userGoal.completed ? 'disabled' : ''}>
               保存目标
             </button>
+            ${userGoal.consecutiveDays > 0 && !userGoal.completed ? `
+            <button id="giveUpGoal" style="flex: 1; padding: 0.75rem; background: #FF9800; color: white; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">
+              放弃目标
+            </button>
+            ` : ''}
             <button id="closeGoal" style="flex: 1; padding: 0.75rem; background: #f44336; color: white; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">
               关闭
             </button>
@@ -8239,6 +8443,50 @@ www.github.com" rows="6" style="
         document
           .getElementById("saveGoal")
           .addEventListener("click", saveGoalSettings);
+          
+        // 放弃目标按钮事件
+        const giveUpButton = document.getElementById("giveUpGoal");
+        if (giveUpButton) {
+          giveUpButton.addEventListener("click", function() {
+            if (confirm("确定要放弃当前目标吗？将扣除设定的金币，当前进度将会丢失。")) {
+              // 保存当前的惩罚金额
+              const penaltyAmount = userGoal.penaltyAmount || 0;
+              
+              // 扣除金币
+              if (penaltyAmount > 0) {
+                const currentCoins = parseInt(localStorage.getItem("coins") || "0");
+                const newCoins = currentCoins - penaltyAmount;
+                // 允许金币总数为负数
+                localStorage.setItem("coins", newCoins.toString());
+                updateHeaderCoins();
+              }
+              
+              // 重置目标
+              userGoal = {
+                consecutiveDays: 0,
+                penaltyAmount: 0,
+                currentStreak: 0,
+                startDate: new Date().toISOString().split("T")[0],
+                completed: false
+              };
+              saveUserGoal();
+              updateGoalButton();
+              
+              const modal = document.getElementById("goalModal");
+              if (modal) {
+                document.body.removeChild(modal);
+              }
+              
+              // 显示消息
+              if (penaltyAmount > 0) {
+                showGoalMessage(`目标已放弃，扣除 ${penaltyAmount} 金币，您可以重新设定新的目标。`);
+              } else {
+                showGoalMessage("目标已放弃，您可以重新设定新的目标。");
+              }
+            }
+          });
+        }
+        
         document.getElementById("closeGoal").addEventListener("click", () => {
           document.body.removeChild(modal);
         });
@@ -8311,8 +8559,7 @@ www.github.com" rows="6" style="
         if (userGoal.consecutiveDays === 0) return;
 
         const today = new Date().toISOString().split("T")[0];
-        const todayData = calendarData[today];
-
+        
         // 如果是新的一天，检查昨天的进度
         if (userGoal.startDate && userGoal.startDate !== today) {
           const yesterday = new Date();
@@ -8320,23 +8567,39 @@ www.github.com" rows="6" style="
           const yesterdayStr = yesterday.toISOString().split("T")[0];
           const yesterdayData = calendarData[yesterdayStr];
 
+          // 标记是否需要清空挑战状态
+          let needResetGoal = false;
+
           if (yesterdayData && yesterdayData.efficient) {
             // 昨天高效，增加连续天数
             userGoal.currentStreak++;
-          } else {
-            // 昨天未高效，重置连续天数
-            userGoal.currentStreak = 0;
-
-            // 如果昨天有数据但不是高效，触发惩罚
-            if (yesterdayData) {
-              applyGoalPenalty();
+            
+            // 检查是否完成目标
+            if (userGoal.currentStreak >= userGoal.consecutiveDays) {
+              userGoal.completed = true;
+              applyGoalReward();
+              needResetGoal = true; // 挑战成功，需要清空挑战状态
             }
+          } else if (yesterdayData) {
+            // 昨天有数据但不是高效，挑战失败
+            userGoal.completed = false;
+            applyGoalPenalty();
+            needResetGoal = true; // 挑战失败，需要清空挑战状态
           }
 
-          // 检查是否完成目标
-          if (userGoal.currentStreak >= userGoal.consecutiveDays) {
-            userGoal.completed = true;
-            applyGoalReward();
+          // 清空挑战状态
+          if (needResetGoal) {
+            const goalDays = userGoal.consecutiveDays;
+            const penaltyAmount = userGoal.penaltyAmount;
+            
+            // 重置挑战状态
+            userGoal = {
+              consecutiveDays: 0,
+              penaltyAmount: 0,
+              currentStreak: 0,
+              startDate: today,
+              completed: false
+            };
           }
 
           saveUserGoal();
